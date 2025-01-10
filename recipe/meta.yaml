@@ -6,18 +6,18 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/executorlib_core-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/executorlib_core-{{ version }}.tar.gz
   sha256: 595102d45ea77718e2234f51f9d8ab0e8c8d3b713fa2cfed12b379cdbd84c9bc
 
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 0
+  number: 1
 
 requirements:
   host:
     - pip
-    - python >=3.9
+    - python {{ python_min }}
     - cloudpickle
     - tqdm
     - pyzmq
@@ -25,7 +25,7 @@ requirements:
     - toml
   run:
     - cloudpickle >=2.0.0,<=3.0.0
-    - python >=3.9
+    - python >={{ python_min }}
     - tqdm >=4.44.0,<=4.66.2
     - pyzmq >=25.0.0,<=26.0.2
 
@@ -36,6 +36,7 @@ test:
     - pip check
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/executorlib/executorlib-core
